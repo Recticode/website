@@ -1,6 +1,8 @@
 "use server"
 
 import {neon} from "@neondatabase/serverless";
+import { headers } from "next/headers"
+import { challengeLimiter } from "@/lib/ratelimit"
 
 export async function submit_challenge(formData:
                       {
@@ -11,6 +13,16 @@ export async function submit_challenge(formData:
                           language: string,
                           email: string,
                       }) {
+    const ip =
+        (await headers()).get("x-forwarded-for") ??
+        "unknown"
+
+    const { success } = await challengeLimiter.limit(ip)
+
+    if (!success) {
+        return { success: false, message: "Rate limited. Try again in 5 minutes" }
+    }
+
     if (!formData.repoUrl.includes("github.com")) {
         return {success: false, message: "Invalid GitHub link"};
     }
