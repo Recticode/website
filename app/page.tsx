@@ -239,7 +239,7 @@ export default function Home() {
                                 Submit your repo and we will review it for inclusion.
                             </p>
                             <a
-                                href="https://github.com/VulcanWM/.github/blob/main/CreateChallenge.md"
+                                href="https://github.com/Recticode/.github/blob/main/CreateChallenge.md"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 text-sm text-foreground hover:underline"
