@@ -1,10 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import {FormEvent, useState, useTransition} from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import {submit_challenge} from "@/app/actions";
 
 export function ChallengeForm() {
+    const [isPending, startTransition] = useTransition()
+    const [message, setMessage] = useState("")
+    const [messageIsError, setMessageIsError] = useState(false)
+
     const [formData, setFormData] = useState({
         repoUrl: "",
         name: "",
@@ -16,14 +21,66 @@ export function ChallengeForm() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        // TODO: Handle form submission
-        console.log("Form submitted:", formData)
+
+        if (!formData.repoUrl.includes("github.com")) {
+            setMessage("Invalid GitHub link")
+            setMessageIsError(true)
+            return;
+        }
+
+        if (formData.name.length < 5 || formData.name.length > 100) {
+            setMessage("Name must be at least 5 characters long and less than 100 characters")
+            setMessageIsError(true)
+            return;
+        }
+
+        if (formData.description.length < 10 || formData.description.length > 200) {
+            setMessage("Description must be at least 10 characters long and less than 200 characters")
+            setMessageIsError(true)
+            return;
+        }
+
+        if (!['easy', 'medium', 'hard'].includes(formData.difficulty)){
+            setMessage("Invalid difficulty")
+            setMessageIsError(true)
+            return;
+        }
+
+        if (!formData.email.includes("@")){
+            setMessage("Invalid email address")
+            setMessageIsError(true)
+            return;
+        }
+
+        if (formData.language.length < 2 || formData.language.length > 25) {
+            setMessage("Language must be at least 2 characters long and less than 25 characters")
+        }
+
+        startTransition(async () => {
+            const result = await submit_challenge(formData)
+            if (result.status){
+                setMessage("Submitted challenge! Wait for the review now")
+                setMessageIsError(false)
+            } else {
+                setMessage(result.message)
+                setMessageIsError(true)
+            }
+        })
     }
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2">
+                    {message != "" &&
+                        <>
+                        {messageIsError ?
+                            <p className={"text-red-500"}>{message}</p>
+                        :
+                            <p className={"text-green-500"}>{message}</p>
+                        }
+                        </>
+                    }
                     <label htmlFor="repoUrl" className="block text-sm font-medium text-foreground mb-1.5">
                         GitHub repo link
                     </label>
@@ -113,8 +170,8 @@ export function ChallengeForm() {
                 </div>
             </div>
 
-            <Button type="submit" className="w-full sm:w-auto">
-                Submit challenge
+            <Button type="submit" disabled={isPending}>
+                {isPending ? "Submitting..." : "Submit challenge"}
             </Button>
         </form>
     )

@@ -225,37 +225,37 @@ export default function Home() {
                 </div>
             </section>
 
-            {/*/!* Create your own challenge *!/*/}
-            {/*<section className="py-20 px-6 border-t border-border">*/}
-            {/*    <div className="mx-auto max-w-6xl">*/}
-            {/*        <div className="grid lg:grid-cols-12 gap-12">*/}
-            {/*            <div className="lg:col-span-5">*/}
-            {/*                <p className="text-sm text-muted-foreground mb-3">Community driven</p>*/}
-            {/*                <h2 className="text-2xl sm:text-3xl font-semibold text-foreground leading-tight mb-4">*/}
-            {/*                    Create your own challenge*/}
-            {/*                </h2>*/}
-            {/*                <p className="text-muted-foreground leading-relaxed mb-6">*/}
-            {/*                    Got a gnarly bug you solved at work? Turn it into a challenge for others to learn from.*/}
-            {/*                    Submit your repo and we will review it for inclusion.*/}
-            {/*                </p>*/}
-            {/*                <a*/}
-            {/*                    href="https://github.com/VulcanWM/.github/blob/main/CreateChallenge.md"*/}
-            {/*                    target="_blank"*/}
-            {/*                    rel="noopener noreferrer"*/}
-            {/*                    className="inline-flex items-center gap-2 text-sm text-foreground hover:underline"*/}
-            {/*                >*/}
-            {/*                    Read the submission guide*/}
-            {/*                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>*/}
-            {/*                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />*/}
-            {/*                    </svg>*/}
-            {/*                </a>*/}
-            {/*            </div>*/}
-            {/*            <div className="lg:col-span-6 lg:col-start-7">*/}
-            {/*                <ChallengeForm />*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
+            {/* Create your own challenge */}
+            <section className="py-20 px-6 border-t border-border">
+                <div className="mx-auto max-w-6xl">
+                    <div className="grid lg:grid-cols-12 gap-12">
+                        <div className="lg:col-span-5">
+                            <p className="text-sm text-muted-foreground mb-3">Community driven</p>
+                            <h2 className="text-2xl sm:text-3xl font-semibold text-foreground leading-tight mb-4">
+                                Create your own challenge
+                            </h2>
+                            <p className="text-muted-foreground leading-relaxed mb-6">
+                                Got a gnarly bug you solved at work? Turn it into a challenge for others to learn from.
+                                Submit your repo and we will review it for inclusion.
+                            </p>
+                            <a
+                                href="https://github.com/VulcanWM/.github/blob/main/CreateChallenge.md"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 text-sm text-foreground hover:underline"
+                            >
+                                Read the submission guide
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </a>
+                        </div>
+                        <div className="lg:col-span-6 lg:col-start-7">
+                            <ChallengeForm />
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             {/* How it works */}
             <section className="py-20 px-6 border-t border-border">
