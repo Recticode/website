@@ -79,17 +79,17 @@ export default function DebuggingChampionshipPage() {
                         <div className="flex items-center gap-2 text-xs overflow-x-auto pb-2">
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-secondary text-muted-foreground rounded">Challenge Sprint</span>
-                                <span className="text-muted-foreground">May 18-31</span>
+                                <span className="text-muted-foreground">May 04-31</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-secondary text-muted-foreground rounded">Review</span>
-                                <span className="text-muted-foreground">Jun 1</span>
+                                <span className="text-muted-foreground">Jun 01</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-diff-add/20 text-diff-add rounded font-medium">Debugging Championship</span>
-                                <span className="text-muted-foreground">Jun 1-14</span>
+                                <span className="text-muted-foreground">Jun 01-14</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">

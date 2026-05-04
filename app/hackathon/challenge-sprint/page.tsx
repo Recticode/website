@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { Countdown } from "@/components/countdown"
 import { ShareButtons } from "@/components/share-buttons"
-import { ChallengeSprintForm } from "./form"
+import {ChallengeForm} from "@/components/challenge-form";
 
 export const metadata = {
     title: "Challenge Sprint | Recticode",
@@ -9,7 +9,7 @@ export const metadata = {
 }
 
 export default function ChallengeSprintPage() {
-    const startDate = new Date("2026-05-18T00:00:00")
+    const startDate = new Date("2026-05-04T00:00:00")
     const endDate = new Date("2026-05-31T23:59:59")
     const now = new Date()
 
@@ -63,7 +63,7 @@ export default function ChallengeSprintPage() {
                         </p>
 
                         <p className="text-sm font-mono text-muted-foreground mb-8">
-                            May 18 - May 31, 2025
+                            May 04 - May 31, 2025
                         </p>
 
                         <ShareButtons
@@ -79,17 +79,17 @@ export default function ChallengeSprintPage() {
                         <div className="flex items-center gap-2 text-xs overflow-x-auto pb-2">
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-terminal text-terminal-text rounded font-medium">Challenge Sprint</span>
-                                <span className="text-muted-foreground">May 18-31</span>
+                                <span className="text-muted-foreground">May 04-31</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-secondary text-muted-foreground rounded">Review</span>
-                                <span className="text-muted-foreground">Jun 1</span>
+                                <span className="text-muted-foreground">Jun 01</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-secondary text-muted-foreground rounded">Debugging Championship</span>
-                                <span className="text-muted-foreground">Jun 1-14</span>
+                                <span className="text-muted-foreground">Jun 01-14</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
@@ -293,7 +293,10 @@ export default function ChallengeSprintPage() {
 
                     {/* Form */}
                     {isActive ? (
-                        <ChallengeSprintForm />
+                        <>
+                            <h2 className="font-semibold text-foreground text-lg mb-4">Submit your challenge</h2>
+                            <ChallengeForm />
+                        </>
                     ) : hasEnded ? (
                         <div className="text-center py-10">
                             <p className="text-muted-foreground">
