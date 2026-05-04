@@ -18,6 +18,18 @@ export default function Home() {
                     />
                     <div className="flex items-center gap-4">
                         <a
+                            href="/hackathon/challenge-sprint"
+                            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                            Challenge Sprint
+                        </a>
+                        <a
+                            href="/hackathon/debugging-championship"
+                            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                            Debugging Championship
+                        </a>
+                        <a
                             href="https://github.com/sponsors/VulcanWM"
                             target="_blank"
                             rel="noopener noreferrer"
