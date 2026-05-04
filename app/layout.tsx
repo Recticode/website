@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-// add analytics
-// make logo better
 import './globals.css'
+import Script from 'next/script'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -35,6 +34,16 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         {children}
       </body>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-4C967PR2VD" />
+      <Script id="google-analytics">
+          {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                    
+                        gtag('config', 'G-4C967PR2VD');
+                    `}
+      </Script>
     </html>
   )
 }
