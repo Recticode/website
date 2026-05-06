@@ -13,7 +13,7 @@ export function ChallengeForm() {
     const [formData, setFormData] = useState({
         repoUrl: "",
         name: "",
-        difficulty: "",
+        difficulty: 5,
         description: "",
         language: "",
         email: "",
@@ -40,10 +40,8 @@ export function ChallengeForm() {
             return;
         }
 
-        if (!['easy', 'medium', 'hard'].includes(formData.difficulty)){
-            setMessage("Invalid difficulty")
-            setMessageIsError(true)
-            return;
+        if (formData.difficulty > 10 || formData.difficulty < 1){
+            return {success: false, message: "Difficulty must be an integer between 1 and 10 (inclusive)"};
         }
 
         if (!formData.email.includes("@")){
@@ -110,20 +108,17 @@ export function ChallengeForm() {
 
                 <div>
                     <label htmlFor="difficulty" className="block text-sm font-medium text-foreground mb-1.5">
-                        Difficulty
+                        Difficulty (1-10)
                     </label>
-                    <select
+                    <Input
                         id="difficulty"
+                        type="number"
+                        min="1"
+                        max="10"
                         value={formData.difficulty}
-                        onChange={(e) => setFormData({ ...formData, difficulty: e.target.value })}
+                        onChange={(e) => setFormData({ ...formData, difficulty: Number.parseInt(e.target.value) || 5 })}
                         required
-                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        <option value="" disabled>Select difficulty</option>
-                        <option value="easy">Easy</option>
-                        <option value="medium">Medium</option>
-                        <option value="hard">Hard</option>
-                    </select>
+                    />
                 </div>
 
                 <div>

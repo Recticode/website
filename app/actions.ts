@@ -8,7 +8,7 @@ export async function submit_challenge(formData:
                       {
                           repoUrl: string,
                           name: string,
-                          difficulty: string,
+                          difficulty: number,
                           description: string,
                           language: string,
                           email: string,
@@ -35,8 +35,8 @@ export async function submit_challenge(formData:
         return {success: false, message: "Description must be at least 10 characters long and less than 200 characters"};
     }
 
-    if (!['easy', 'medium', 'hard'].includes(formData.difficulty)){
-        return {success: false, message: "Invalid difficulty"};
+    if (formData.difficulty > 10 || formData.difficulty < 1){
+        return {success: false, message: "Difficulty must be an integer between 1 and 10 (inclusive)"};
     }
 
     if (!formData.email.includes("@")){
