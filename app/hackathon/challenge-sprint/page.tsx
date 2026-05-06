@@ -234,6 +234,14 @@ export default function ChallengeSprintPage() {
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li className="flex gap-2">
                                 <span className="text-terminal-text shrink-0">—</span>
+                                Official certificate of participation (PDF, shareable on LinkedIn)
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="text-terminal-text shrink-0">—</span>
+                                Special badges on your recticode profile
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="text-terminal-text shrink-0">—</span>
                                 Featured on the recticode homepage
                             </li>
                             <li className="flex gap-2">

@@ -55,8 +55,39 @@ export default function Home() {
                 </div>
             </nav>
 
+            {/* Hackathon Banner */}
+            <section className="pt-20 px-6">
+                <div className="mx-auto max-w-6xl">
+                    <a
+                        href="/hackathon/challenge-sprint"
+                        className="block bg-terminal rounded-xl p-4 sm:p-6 hover:bg-terminal/90 transition-colors group"
+                    >
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="inline-block w-2 h-2 bg-terminal-text rounded-full animate-pulse" />
+                                    <span className="text-xs text-terminal-text font-medium uppercase tracking-wide">Live now</span>
+                                </div>
+                                <h2 className="text-lg sm:text-xl font-semibold text-white mb-1">
+                                    Challenge Sprint + Debugging Championship
+                                </h2>
+                                <p className="text-sm text-white/60">
+                                    Create debugging challenges (May 18-31) or compete to solve them (June 1-14). Certificates and badges for all participants.
+                                </p>
+                            </div>
+                            <div className="flex items-center gap-2 text-terminal-text text-sm font-medium group-hover:translate-x-1 transition-transform">
+                                Join now
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
             {/* Hero */}
-            <section className="pt-28 pb-16 px-6">
+            <section className="pt-12 pb-16 px-6">
                 <div className="mx-auto max-w-6xl">
                     <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                         {/* Left column - text */}
