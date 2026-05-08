@@ -2,6 +2,7 @@ import Image from "next/image"
 import { CodeDemo } from "@/components/code-demo"
 import { CliDemo } from "@/components/cli-demo"
 import { ChallengeForm } from "@/components/challenge-form"
+import Link from "next/link";
 
 export default function Home() {
     return (
@@ -9,13 +10,15 @@ export default function Home() {
             {/* Navbar */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
                 <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-                    <Image
-                        src="/recticode-logo.png"
-                        alt="recticode"
-                        width={140}
-                        height={32}
-                        className="h-6 w-auto"
-                    />
+                    <Link href="/" className="flex items-center gap-2">
+                        <Image
+                            src="/recticode-logo.png"
+                            alt="recticode"
+                            width={140}
+                            height={32}
+                            className="h-6 w-auto"
+                        />
+                    </Link>
                     <div className="flex items-center gap-4">
                         <a
                             href="/hackathon/challenge-sprint"
