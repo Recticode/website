@@ -75,3 +75,67 @@ const getCachedChallenges = unstable_cache(
 export async function get_all_challenges() {
     return getCachedChallenges()
 }
+
+const getCachedLeaderboard = unstable_cache(
+    async () => {
+        const sql = neon(process.env.NEON_URL as string)
+
+        const rows = await sql`
+            SELECT
+                u.id,
+                u.github_username,
+
+                -- score: sum difficulty for successful unique solves
+                COALESCE(
+                        SUM(DISTINCT CASE
+                                         WHEN ca.status = 'success' THEN c.difficulty
+                            END),
+                        0) AS score,
+
+                -- solved challenges
+                COUNT(DISTINCT CASE
+                                   WHEN ca.status = 'success' THEN ca.challenge_id
+                    END) AS challenges,
+
+                -- total unique attempts
+                COUNT(DISTINCT ca.challenge_id) AS challenges_attempted,
+
+                -- success rate
+                CASE
+                    WHEN COUNT(DISTINCT ca.challenge_id) = 0 THEN 0
+                    ELSE ROUND(
+                            (
+                                COUNT(DISTINCT CASE
+                                                   WHEN ca.status = 'success' THEN ca.challenge_id
+                                    END)::numeric
+                            /
+                            COUNT(DISTINCT ca.challenge_id)::numeric
+                                ) * 100
+                         )
+                    END AS success_rate
+
+            FROM users u
+                     LEFT JOIN challenge_attempts ca ON u.id = ca.user_id
+                     LEFT JOIN challenges c ON ca.challenge_id = c.id
+
+            GROUP BY u.id, u.github_username
+            ORDER BY score DESC
+                LIMIT 20
+        `
+
+        return rows.map((row: any, index: number) => ({
+            rank: index + 1,
+            username: row.github_username,
+            score: parseInt(row.score),
+            challengesSolved: Number(row.challenges),
+            challengesAttempted: Number(row.challenges_attempted),
+            successRate: Number(row.success_rate),
+        }))
+    },
+    ["leaderboard"],
+    { revalidate: 60 }
+)
+
+export async function get_leaderboard() {
+    return getCachedLeaderboard()
+}
