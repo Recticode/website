@@ -4,7 +4,7 @@ import {neon} from "@neondatabase/serverless";
 import {headers} from "next/headers"
 import {challengeLimiter} from "@/lib/ratelimit"
 import { unstable_cache } from "next/cache"
-import {Challenge} from "@/lib/types";
+import {Challenge, LeaderboardUser} from "@/lib/types";
 
 export async function submit_challenge(formData:
                       {
@@ -55,17 +55,23 @@ export async function submit_challenge(formData:
 }
 
 const getCachedChallenges = unstable_cache(
-    async (): Promise<Challenge[]> => {
+    async (): Promise<(Challenge & { github_username: string })[]> => {
         const sql = neon(process.env.NEON_URL as string)
 
-        const rows = await sql`SELECT * FROM challenges`
+        const rows = await sql`
+            SELECT
+                c.*,
+                u.github_username
+            FROM challenges c
+            JOIN users u ON c.creator_id = u.id
+        `
 
-        return rows as Challenge[]
+        return rows as (Challenge & { github_username: string })[]
     },
     ["all-challenges"],
     { revalidate: 60 }
 )
 
-export async function get_all_challenges(): Promise<Challenge[]> {
+export async function get_all_challenges() {
     return getCachedChallenges()
 }
