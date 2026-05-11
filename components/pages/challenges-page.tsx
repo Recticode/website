@@ -64,7 +64,7 @@ export default function ChallengesPageComponent({
             {/* Header */}
             <header className="border-b border-border">
                 <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2">
+                    <Link href="/public" className="flex items-center gap-2">
                         <Image
                             src="/recticode-icon.png"
                             alt="recticode"

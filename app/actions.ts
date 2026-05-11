@@ -4,7 +4,7 @@ import {neon} from "@neondatabase/serverless";
 import {headers} from "next/headers"
 import {challengeLimiter} from "@/lib/ratelimit"
 import { unstable_cache } from "next/cache"
-import {Challenge, LeaderboardUser, UserStats} from "@/lib/types";
+import {Challenge, UserStats} from "@/lib/types";
 
 export async function submit_challenge(formData:
                       {

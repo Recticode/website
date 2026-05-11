@@ -16,7 +16,7 @@ export default function LoginPageComponent() {
             {/* Nav */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
                 <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-                    <Link href="/">
+                    <Link href="/public">
                         <Image
                             src="/recticode-logo.png"
                             alt="recticode"

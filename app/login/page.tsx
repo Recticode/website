@@ -1,4 +1,4 @@
-import LoginPageComponent from "@/components/login-page";
+import LoginPageComponent from "@/components/pages/login-page";
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth';
