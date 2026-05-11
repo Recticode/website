@@ -4,7 +4,7 @@ import {neon} from "@neondatabase/serverless";
 import {headers} from "next/headers"
 import {challengeLimiter} from "@/lib/ratelimit"
 import { unstable_cache } from "next/cache"
-import {Challenge, UserStats} from "@/lib/types";
+import {Challenge, UserStats, PublicProfile} from "@/lib/types";
 
 export async function submit_challenge(formData:
                       {
@@ -263,4 +263,135 @@ const getCachedUserStats = unstable_cache(
 
 export async function get_user_stats(githubUserId: number) {
     return getCachedUserStats(githubUserId)
+}
+
+const getCachedProfile = unstable_cache(
+    async (username: string): Promise<PublicProfile | null> => {
+        const sql = neon(process.env.NEON_URL as string)
+
+        const users = await sql`
+            SELECT id, github_username, github_user_id, created_at
+            FROM users
+            WHERE github_username = ${username}
+            LIMIT 1
+        `
+
+        if (users.length === 0) return null
+
+        const user = users[0]
+
+        const stats = await sql`
+            SELECT
+                COALESCE(SUM(DISTINCT CASE
+                    WHEN ca.status = 'success' THEN c.difficulty
+                END), 0) AS score,
+
+                COUNT(DISTINCT CASE
+                    WHEN ca.status = 'success' THEN ca.challenge_id
+                END) AS solved,
+
+                COUNT(DISTINCT ca.challenge_id) AS attempted
+
+            FROM challenge_attempts ca
+            LEFT JOIN challenges c ON ca.challenge_id = c.id
+            WHERE ca.user_id = ${user.id}
+        `
+
+        const score = Number(stats[0].score)
+        const solved = Number(stats[0].solved)
+        const attempted = Number(stats[0].attempted)
+
+        const successRate =
+            attempted === 0 ? 0 : Math.round((solved / attempted) * 100)
+
+        const createdCount = await sql`
+            SELECT COUNT(*) AS created
+            FROM challenges
+            WHERE creator_id = ${user.id}
+        `
+
+        const challengesCreated = Number(createdCount[0].created)
+
+        const rankResult = await sql`
+            WITH leaderboard AS (
+                SELECT
+                    u.id,
+                    COALESCE(SUM(DISTINCT CASE
+                        WHEN ca.status = 'success' THEN c.difficulty
+                    END), 0) AS score
+                FROM users u
+                LEFT JOIN challenge_attempts ca ON u.id = ca.user_id
+                LEFT JOIN challenges c ON ca.challenge_id = c.id
+                GROUP BY u.id
+            )
+            SELECT COUNT(*) + 1 AS rank
+            FROM leaderboard
+            WHERE score > ${score}
+        `
+
+        const rank = Number(rankResult[0].rank)
+
+        const solvedChallenges = await sql`
+            SELECT
+                c.name,
+                c.difficulty,
+                MAX(ca.submitted_at) AS solved_at
+            FROM challenge_attempts ca
+            JOIN challenges c ON ca.challenge_id = c.id
+            WHERE ca.user_id = ${user.id}
+            AND ca.status = 'success'
+            GROUP BY c.name, c.difficulty
+            ORDER BY solved_at DESC
+            LIMIT 10
+        `
+
+        const createdChallenges = await sql`
+            SELECT
+                c.name,
+                c.difficulty,
+                COUNT(DISTINCT ca.user_id) FILTER (WHERE ca.status = 'success') AS solves
+            FROM challenges c
+            LEFT JOIN challenge_attempts ca ON c.id = ca.challenge_id
+            WHERE c.creator_id = ${user.id}
+            GROUP BY c.name, c.difficulty
+        `
+
+        return {
+            username: user.github_username,
+            github_url: `https://github.com/${user.github_username}`,
+            avatar_url: `https://avatars.githubusercontent.com/u/${user.github_user_id}?v=4`,
+            joined: new Date(user.created_at).toLocaleDateString("en-GB", {
+                month: "long",
+                year: "numeric",
+            }),
+
+            // badges: [], // will do badge system later
+
+            stats: {
+                challenges_solved: solved,
+                challenges_created: challengesCreated,
+                total_score: score,
+                rank,
+                success_rate: successRate,
+            },
+
+            solved_challenges: solvedChallenges.map((c: any) => ({
+                name: c.name,
+                difficulty: Number(c.difficulty),
+                solved_at: c.solved_at.toISOString().split("T")[0],
+            })),
+
+            created_challenges: createdChallenges.map((c: any) => ({
+                name: c.name,
+                difficulty: Number(c.difficulty),
+                solves: Number(c.solves),
+            })),
+        }
+    },
+    ["public-profile"],
+    { revalidate: 60 }
+)
+
+export async function get_public_profile(username: string) {
+    return getCachedProfile(username)
 }

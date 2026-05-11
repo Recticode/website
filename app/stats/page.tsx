@@ -7,6 +7,7 @@ import StatsLoggedInPageComponent from "@/components/pages/stats-logged-in-page"
 
 export default async function LoginPage() {
     const authUser = await getServerSession(authOptions);
+    console.log(authUser);
     const githubId = authUser?.user?.githubId || null
 
     if (githubId == null) {

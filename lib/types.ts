@@ -43,3 +43,31 @@ export type UserStats = {
         startedAt: string
     }[]
 }
+
+export type PublicProfile = {
+    username: string
+    github_url: string
+    avatar_url: string
+    joined: string
+    // badges: { name: string; color: string }[]
+
+    stats: {
+        challenges_solved: number
+        challenges_created: number
+        total_score: number
+        rank: number
+        success_rate: number
+    }
+
+    solved_challenges: {
+        name: string
+        difficulty: number
+        solved_at: string
+    }[]
+
+    created_challenges: {
+        name: string
+        difficulty: number
+        solves: number
+    }[]
+}
