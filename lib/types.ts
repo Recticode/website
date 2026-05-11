@@ -7,48 +7,6 @@ export type Challenge = {
     difficulty: number
 }
 
-export type User = {
-    id: number
-    github_user_id: number
-    github_username: string
-    created_at: string
-}
-
-export type ReviewChallenge = {
-    id: number
-    github_repo_url: string
-    challenge_name: string
-    difficulty: number
-    language: string
-    email: string
-    description: string
-}
-
-export type ChallengeAttemptRow = {
-    id: number
-    user_id: number
-    challenge_id: number
-    status: string
-    submitted_at: string
-}
-
-export type ChallengeAttempt = {
-    id: number
-    user_id: number
-    challenge_id: number
-    status: string
-    submitted_at: Date
-}
-
-export function mapChallengeAttempt(
-    row: ChallengeAttemptRow
-): ChallengeAttempt {
-    return {
-        ...row,
-        submitted_at: new Date(row.submitted_at),
-    }
-}
-
 export type LeaderboardUser = {
     rank: number
     username: string
@@ -56,4 +14,32 @@ export type LeaderboardUser = {
     challengesSolved: number
     challengesAttempted: number
     successRate: number
+}
+
+export type UserStats = {
+    username: string
+    github_username: string
+    joinedDate: string
+
+    totalScore: number
+    challengesCompleted: number
+    challengesAttempted: number
+    challengesInProgress: number
+    successRate: number
+    rank: number
+
+    // currentStreak: number
+    // longestStreak: number add later
+
+    completedChallenges: {
+        name: string
+        difficulty: number
+        completedAt: string
+    }[]
+
+    inProgressChallenges: {
+        name: string
+        difficulty: number
+        startedAt: string
+    }[]
 }

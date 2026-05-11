@@ -4,7 +4,7 @@ import {neon} from "@neondatabase/serverless";
 import {headers} from "next/headers"
 import {challengeLimiter} from "@/lib/ratelimit"
 import { unstable_cache } from "next/cache"
-import {Challenge, LeaderboardUser} from "@/lib/types";
+import {Challenge, LeaderboardUser, UserStats} from "@/lib/types";
 
 export async function submit_challenge(formData:
                       {
@@ -138,4 +138,129 @@ const getCachedLeaderboard = unstable_cache(
 
 export async function get_leaderboard() {
     return getCachedLeaderboard()
+}
+
+const getCachedUserStats = unstable_cache(
+    async (githubUserId: number): Promise<UserStats | null> => {
+        const sql = neon(process.env.NEON_URL as string)
+
+        const users = await sql`
+            SELECT id, github_username, created_at
+            FROM users
+            WHERE github_user_id = ${githubUserId}
+            LIMIT 1
+        `
+
+        if (users.length === 0) return null
+
+        const user = users[0]
+
+        const stats = await sql`
+            SELECT
+                COALESCE(SUM(DISTINCT CASE
+                    WHEN ca.status = 'success' THEN c.difficulty
+                END), 0) AS score,
+
+                COUNT(DISTINCT CASE
+                    WHEN ca.status = 'success' THEN ca.challenge_id
+                END) AS solved,
+
+                COUNT(DISTINCT ca.challenge_id) AS attempted
+
+            FROM challenge_attempts ca
+            LEFT JOIN challenges c ON ca.challenge_id = c.id
+            WHERE ca.user_id = ${user.id}
+        `
+
+        const score = Number(stats[0].score)
+        const solved = Number(stats[0].solved)
+        const attempted = Number(stats[0].attempted)
+
+        const successRate =
+            attempted === 0 ? 0 : Math.round((solved / attempted) * 100)
+
+        const inProgress = await sql`
+            SELECT DISTINCT c.name, c.difficulty, MIN(ca.submitted_at) as started_at
+            FROM challenge_attempts ca
+            JOIN challenges c ON ca.challenge_id = c.id
+            WHERE ca.user_id = ${user.id}
+            AND ca.challenge_id NOT IN (
+                SELECT challenge_id
+                FROM challenge_attempts
+                WHERE user_id = ${user.id}
+                AND status = 'success'
+            )
+            GROUP BY c.name, c.difficulty
+            ORDER BY started_at DESC
+        `
+
+        const completed = await sql`
+            SELECT
+                c.name,
+                c.difficulty,
+                MAX(ca.submitted_at) as completed_at
+            FROM challenge_attempts ca
+            JOIN challenges c ON ca.challenge_id = c.id
+            WHERE ca.user_id = ${user.id}
+            AND ca.status = 'success'
+            GROUP BY c.name, c.difficulty
+            ORDER BY completed_at DESC
+        `
+
+        const rankResult = await sql`
+            WITH leaderboard AS (
+                SELECT
+                    u.id,
+                    COALESCE(SUM(DISTINCT CASE
+                        WHEN ca.status = 'success' THEN c.difficulty
+                    END), 0) AS score
+                FROM users u
+                LEFT JOIN challenge_attempts ca ON u.id = ca.user_id
+                LEFT JOIN challenges c ON ca.challenge_id = c.id
+                GROUP BY u.id
+            )
+            SELECT COUNT(*) + 1 AS rank
+            FROM leaderboard
+            WHERE score > ${score}
+        `
+
+        const rank = Number(rankResult[0].rank)
+
+        return {
+            username: user.github_username,
+            github_username: user.github_username,
+            joinedDate: new Date(user.created_at).toLocaleDateString("en-GB", {
+                month: "long",
+                year: "numeric",
+            }),
+
+            totalScore: score,
+            challengesCompleted: solved,
+            challengesAttempted: attempted,
+            challengesInProgress: inProgress.length,
+            successRate,
+            rank,
+
+            // currentStreak: 0,   // streak logic requires date math, add later
+            // longestStreak: 0,
+
+            completedChallenges: completed.map((c: any) => ({
+                name: c.name,
+                difficulty: Number(c.difficulty),
+                completedAt: c.completed_at.toISOString().split("T")[0],
+            })),
+
+            inProgressChallenges: inProgress.map((c: any) => ({
+                name: c.name,
+                difficulty: Number(c.difficulty),
+                startedAt: c.started_at.toISOString().split("T")[0],
+            })),
+        }
+    },
+    ["user-stats"],
+    { revalidate: 60 }
+)
+
+export async function get_user_stats(githubUserId: number) {
+    return getCachedUserStats(githubUserId)
 }
