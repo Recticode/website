@@ -71,3 +71,17 @@ export type PublicProfile = {
         solves: number
     }[]
 }
+
+export type ChallengeStats = {
+    id: number
+    name: string
+    repo_name: string
+    description: string
+    language: string
+    difficulty: number
+    creator_github: string
+    stats: {
+        attempts: number
+        solves: number
+    }
+}

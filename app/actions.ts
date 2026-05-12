@@ -4,7 +4,7 @@ import {neon} from "@neondatabase/serverless";
 import {headers} from "next/headers"
 import {challengeLimiter} from "@/lib/ratelimit"
 import { unstable_cache } from "next/cache"
-import {Challenge, UserStats, PublicProfile} from "@/lib/types";
+import {Challenge, UserStats, PublicProfile, ChallengeStats} from "@/lib/types";
 
 export async function submit_challenge(formData:
                       {
@@ -394,4 +394,68 @@ const getCachedProfile = unstable_cache(
 
 export async function get_public_profile(username: string) {
     return getCachedProfile(username)
+}
+
+export async function get_challenge_by_slug(
+    slug: string
+): Promise<ChallengeStats | null> {
+
+    const sql = neon(process.env.NEON_URL as string)
+
+    return unstable_cache(
+        async () => {
+            const rows = await sql`
+                SELECT
+                    c.id,
+                    c.name,
+                    c.repo_name,
+                    c.description,
+                    c.language,
+                    c.difficulty,
+                    u.github_username AS creator_github,
+
+                    COUNT(ca.id) AS attempts,
+                    COUNT(DISTINCT ca.user_id)
+                        FILTER (WHERE ca.status = 'success') AS solves
+
+                FROM challenges c
+                JOIN users u ON c.creator_id = u.id
+                LEFT JOIN challenge_attempts ca
+                    ON ca.challenge_id = c.id
+
+                WHERE c.repo_name = ${slug}
+
+                GROUP BY
+                    c.id,
+                    c.name,
+                    c.repo_name,
+                    c.description,
+                    c.language,
+                    c.difficulty,
+                    u.github_username
+
+                LIMIT 1
+            `
+
+            if (rows.length === 0) return null
+
+            const row = rows[0]
+
+            return {
+                id: Number(row.id),
+                name: row.name,
+                repo_name: row.repo_name,
+                description: row.description,
+                language: row.language,
+                difficulty: Number(row.difficulty),
+                creator_github: row.creator_github,
+                stats: {
+                    attempts: Number(row.attempts),
+                    solves: Number(row.solves),
+                },
+            }
+        },
+        ["challenge-by-slug", slug],
+        { revalidate: 60 }
+    )()
 }

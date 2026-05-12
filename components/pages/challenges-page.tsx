@@ -4,6 +4,7 @@ import { useState, useMemo } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import {Challenge} from "@/lib/types"
+import {getDifficultyColor, getDifficultyLabel} from "@/lib/difficulty";
 
 export default function ChallengesPageComponent({
                                                     challenges,
@@ -11,18 +12,6 @@ export default function ChallengesPageComponent({
     challenges: (Challenge & { github_username: string })[]
 }) {
     const languages = Array.from(new Set(challenges.map((c) => c.language)))
-
-    function getDifficultyLabel(d: number): string {
-        if (d <= 3) return "Easy"
-        if (d <= 6) return "Medium"
-        return "Hard"
-    }
-
-    function getDifficultyColor(d: number): string {
-        if (d <= 3) return "text-terminal-text"
-        if (d <= 6) return "text-amber-500"
-        return "text-diff-remove"
-    }
 
     const [sortBy, setSortBy] = useState<"difficulty-asc" | "difficulty-desc" | "name">("difficulty-desc")
     const [filterLanguage, setFilterLanguage] = useState<string>("all")

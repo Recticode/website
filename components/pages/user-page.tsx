@@ -3,18 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import {PublicProfile} from "@/lib/types";
-
-function getDifficultyLabel(d: number): string {
-    if (d <= 3) return "Easy"
-    if (d <= 6) return "Medium"
-    return "Hard"
-}
-
-function getDifficultyColor(d: number): string {
-    if (d <= 3) return "text-terminal-text"
-    if (d <= 6) return "text-amber-500"
-    return "text-diff-remove"
-}
+import {getDifficultyColor, getDifficultyLabel} from "@/lib/difficulty";
 
 export default function UserPageComponent({
                                                        userStats,
