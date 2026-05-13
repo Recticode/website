@@ -31,13 +31,12 @@ export default function UserPageComponent({
                 <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
                     <Link href="/" className="flex items-center gap-2">
                         <Image
-                            src="/recticode-icon.png"
+                            src="/recticode-logo.png"
                             alt="recticode"
-                            width={24}
-                            height={24}
-                            className="w-6 h-6"
+                            width={140}
+                            height={32}
+                            className="h-6 w-auto"
                         />
-                        <span className="font-semibold text-foreground">recticode</span>
                     </Link>
                     <div className="flex items-center gap-4">
                         <Link

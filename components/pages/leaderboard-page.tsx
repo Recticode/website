@@ -1,5 +1,6 @@
 import Image from "next/image"
 import {LeaderboardUser} from "@/lib/types";
+import Link from "next/link";
 
 export const metadata = {
     title: "Leaderboard | recticode",
@@ -16,7 +17,7 @@ export default function LeaderboardPageComponent({
             {/* Nav */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
                 <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-                    <a href="/public">
+                    <Link href="/">
                         <Image
                             src="/recticode-logo.png"
                             alt="recticode"
@@ -24,7 +25,7 @@ export default function LeaderboardPageComponent({
                             height={32}
                             className="h-6 w-auto"
                         />
-                    </a>
+                    </Link>
                     <div className="flex items-center gap-4">
                         <a
                             href="https://github.com/sponsors/VulcanWM"

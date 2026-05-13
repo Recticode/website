@@ -1,9 +1,14 @@
 import Link from "next/link"
 import Image from "next/image"
+import type {Metadata} from "next"
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Documentation | recticode",
     description: "Learn how to use recticode CLI, solve challenges, and create your own debugging challenges.",
+    openGraph: {
+        title: "Documentation | recticode",
+        description: "Learn how to use recticode CLI, solve challenges, and create your own debugging challenges.",
+    }
 }
 
 export default function DocsPage() {
@@ -12,15 +17,14 @@ export default function DocsPage() {
             {/* Header */}
             <header className="border-b border-border">
                 <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2">
+                    <Link href="/">
                         <Image
-                            src="/recticode-icon.png"
+                            src="/recticode-logo.png"
                             alt="recticode"
-                            width={24}
-                            height={24}
-                            className="w-6 h-6"
+                            width={140}
+                            height={32}
+                            className="h-6 w-auto"
                         />
-                        <span className="font-semibold text-foreground">recticode</span>
                     </Link>
                     <div className="flex items-center gap-4">
                         <Link

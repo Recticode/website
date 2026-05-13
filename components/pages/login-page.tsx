@@ -5,18 +5,13 @@ import Link from "next/link"
 import { signIn } from "next-auth/react"
 import {Button} from "@/components/ui/button";
 
-export const metadata = {
-    title: "Login | recticode",
-    description: "Log in to recticode with your GitHub account.",
-}
-
 export default function LoginPageComponent() {
     return (
         <main className="min-h-screen bg-background flex flex-col">
             {/* Nav */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
                 <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-                    <Link href="/public">
+                    <Link href="/">
                         <Image
                             src="/recticode-logo.png"
                             alt="recticode"

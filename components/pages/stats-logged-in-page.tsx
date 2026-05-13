@@ -2,11 +2,7 @@
 
 import Image from "next/image"
 import {UserStats} from "@/lib/types";
-
-export const metadata = {
-    title: "Dashboard | recticode",
-    description: "Your personal debugging dashboard on recticode.",
-}
+import Link from "next/link";
 
 export default function StatsLoggedInPageComponent({
                                                     userStats,
@@ -18,7 +14,7 @@ export default function StatsLoggedInPageComponent({
             {/* Nav */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
                 <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-                    <a href="/public">
+                    <Link href="/">
                         <Image
                             src="/recticode-logo.png"
                             alt="recticode"
@@ -26,20 +22,20 @@ export default function StatsLoggedInPageComponent({
                             height={32}
                             className="h-6 w-auto"
                         />
-                    </a>
+                    </Link>
                     <div className="flex items-center gap-4">
-                        <a
+                        <Link
                             href="/leaderboard"
                             className="text-xs text-muted-foreground hover:text-foreground transition-colors"
                         >
                             Leaderboard
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                             href="/stats"
                             className="text-xs text-foreground font-medium"
                         >
                             Your Stats
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </nav>

@@ -4,10 +4,19 @@ import { getServerSession } from 'next-auth';
 import {get_user_stats} from "@/app/actions";
 import StatsNotLoggedPageComponent from "@/components/pages/stats-not-logged-page";
 import StatsLoggedInPageComponent from "@/components/pages/stats-logged-in-page";
+import type {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: "Dashboard | recticode",
+    description: "Your personal debugging dashboard on recticode.",
+    openGraph: {
+        title: "Dashboard | recticode",
+        description: "Your personal debugging dashboard on recticode.",
+    }
+}
 
 export default async function LoginPage() {
     const authUser = await getServerSession(authOptions);
-    console.log(authUser);
     const githubId = authUser?.user?.githubId || null
 
     if (githubId == null) {

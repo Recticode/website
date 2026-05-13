@@ -2,10 +2,16 @@ import Image from "next/image"
 import { Countdown } from "@/components/countdown"
 import { ShareButtons } from "@/components/share-buttons"
 import {ChallengeForm} from "@/components/challenge-form";
+import Link from "next/link";
+import type {Metadata} from "next"
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Challenge Sprint | Recticode",
-    description: "Submit real-world debugging challenges and help build the recticode challenge library. May 18-31, 2025.",
+    description: "Submit real-world debugging challenges and help build the recticode challenge library. May 04-31, 2025.",
+    openGraph: {
+        title: "Challenge Sprint | Recticode",
+        description: "Submit real-world debugging challenges and help build the recticode challenge library. May 04-31, 2025.",
+    }
 }
 
 export default function ChallengeSprintPage() {
@@ -22,7 +28,7 @@ export default function ChallengeSprintPage() {
             {/* Nav */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
                 <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-                    <a href="/">
+                    <Link href="/">
                         <Image
                             src="/recticode-logo.png"
                             alt="recticode"
@@ -30,13 +36,13 @@ export default function ChallengeSprintPage() {
                             height={32}
                             className="h-6 w-auto"
                         />
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                         href="/"
                         className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     >
                         Back to home
-                    </a>
+                    </Link>
                 </div>
             </nav>
 

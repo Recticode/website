@@ -1,9 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
+import type {Metadata} from "next"
 
-export const metadata = {
-    title: "Careers & Contributions | recticode",
+export const metadata: Metadata = {
+    title: "Careers + Contributions | recticode",
     description: "How to build your profile as a recticode contributor.",
+    openGraph: {
+        title: "Careers + Contributions | recticode",
+        description: "How to build your profile as a recticode contributor.",
+    }
 }
 
 export default function CareersPage() {
