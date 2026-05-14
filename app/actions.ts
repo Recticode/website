@@ -2,7 +2,7 @@
 
 import {neon} from "@neondatabase/serverless";
 import {headers} from "next/headers"
-import {challengeLimiter, participantLimiter} from "@/lib/ratelimit"
+import {challengeLimiter} from "@/lib/ratelimit"
 import { unstable_cache } from "next/cache"
 import {Challenge, UserStats, PublicProfile, ChallengeStats} from "@/lib/types";
 
