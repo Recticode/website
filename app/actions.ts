@@ -2,7 +2,7 @@
 
 import {neon} from "@neondatabase/serverless";
 import {headers} from "next/headers"
-import {challengeLimiter} from "@/lib/ratelimit"
+import {challengeLimiter, participantLimiter} from "@/lib/ratelimit"
 import { unstable_cache } from "next/cache"
 import {Challenge, UserStats, PublicProfile, ChallengeStats} from "@/lib/types";
 
@@ -50,8 +50,15 @@ export async function submit_challenge(formData:
     }
 
     const sql = neon(process.env.NEON_URL as string);
-    await sql`INSERT INTO review_challenges (github_repo_url, challenge_name, difficulty, language, email, description) VALUES (${formData['repoUrl']}, ${formData['name']}, ${formData['difficulty']}, ${formData['language']}, ${formData['email']}, ${formData['description']})`;
-    return {status: true, message: ""}
+    try {
+        await sql`INSERT INTO review_challenges (github_repo_url, challenge_name, difficulty, language, email, description) VALUES (${formData['repoUrl']}, ${formData['name']}, ${formData['difficulty']}, ${formData['language']}, ${formData['email']}, ${formData['description']})`;
+        return {status: true, message: ""}
+    } catch (err: any){
+        return {
+            success: false,
+            message: "Something went wrong. Please try again."
+        }
+    }
 }
 
 const getCachedChallenges = unstable_cache(

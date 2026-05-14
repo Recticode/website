@@ -1,7 +1,6 @@
 import Image from "next/image"
 import { Countdown } from "@/components/countdown"
 import { ShareButtons } from "@/components/share-buttons"
-import { DebuggingChampionshipForm } from "./form"
 import Link from "next/link";
 import type {Metadata} from "next"
 
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 }
 
 export default function DebuggingChampionshipPage() {
-    const startDate = new Date("2026-06-01T00:00:00")
+    const startDate = new Date("2026-05-01T00:00:00")
     const endDate = new Date("2026-06-14T23:59:59")
     const now = new Date()
 
@@ -301,7 +300,12 @@ export default function DebuggingChampionshipPage() {
 
                     {/* Form */}
                     {isActive ? (
-                        <DebuggingChampionshipForm />
+                        <>
+                            <h2 className="font-semibold text-foreground text-lg mb-2">Register for the competition</h2>
+                            <p className="text-muted-foreground mb-4">
+                                No need to sign up! Just start debugging.
+                            </p>
+                        </>
                     ) : hasEnded ? (
                         <div className="text-center py-10">
                             <p className="text-muted-foreground">
