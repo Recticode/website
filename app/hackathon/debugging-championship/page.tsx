@@ -6,10 +6,10 @@ import type {Metadata} from "next"
 
 export const metadata: Metadata = {
     title: "Debugging Championship | Recticode",
-    description: "Compete to solve debugging challenges and climb the leaderboard. June 1-14, 2025.",
+    description: "Compete to solve debugging challenges and climb the leaderboard. July 01-07, 2026.",
     openGraph: {
         title: "Debugging Championship | Recticode",
-        description: "Compete to solve debugging challenges and climb the leaderboard. June 1-14, 2025.",
+        description: "Compete to solve debugging challenges and climb the leaderboard. July 01-07, 2026.",
     }
 }
 
@@ -68,7 +68,7 @@ export default function DebuggingChampionshipPage() {
                         </p>
 
                         <p className="text-sm font-mono text-muted-foreground mb-8">
-                            June 1 - June 14, 2025
+                            July 1 - July 7, 2026
                         </p>
 
                         <ShareButtons
@@ -84,17 +84,17 @@ export default function DebuggingChampionshipPage() {
                         <div className="flex items-center gap-2 text-xs overflow-x-auto pb-2">
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-secondary text-muted-foreground rounded">Challenge Sprint</span>
-                                <span className="text-muted-foreground">May 04-31</span>
+                                <span className="text-muted-foreground">June 15-30</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-secondary text-muted-foreground rounded">Review</span>
-                                <span className="text-muted-foreground">Jun 01</span>
+                                <span className="text-muted-foreground">July 01</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-diff-add/20 text-diff-add rounded font-medium">Debugging Championship</span>
-                                <span className="text-muted-foreground">Jun 01-14</span>
+                                <span className="text-muted-foreground">July 01-07</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
@@ -315,7 +315,7 @@ export default function DebuggingChampionshipPage() {
                     ) : (
                         <div className="text-center py-10 bg-secondary/30 rounded-xl">
                             <p className="text-muted-foreground mb-4">
-                                Competition starts June 1st.
+                                Competition starts July 1st.
                             </p>
                             <a
                                 href="/hackathon/challenge-sprint"

@@ -7,16 +7,16 @@ import type {Metadata} from "next"
 
 export const metadata: Metadata = {
     title: "Challenge Sprint | Recticode",
-    description: "Submit real-world debugging challenges and help build the recticode challenge library. May 04-31, 2025.",
+    description: "Submit real-world debugging challenges and help build the recticode challenge library. June 15-30, 2026.",
     openGraph: {
         title: "Challenge Sprint | Recticode",
-        description: "Submit real-world debugging challenges and help build the recticode challenge library. May 04-31, 2025.",
+        description: "Submit real-world debugging challenges and help build the recticode challenge library. June 15-30, 2026.",
     }
 }
 
 export default function ChallengeSprintPage() {
-    const startDate = new Date("2026-05-04T00:00:00")
-    const endDate = new Date("2026-05-31T23:59:59")
+    const startDate = new Date("2026-06-15T00:00:00")
+    const endDate = new Date("2026-06-30T23:59:59")
     const now = new Date()
 
     const hasStarted = now >= startDate
@@ -69,7 +69,7 @@ export default function ChallengeSprintPage() {
                         </p>
 
                         <p className="text-sm font-mono text-muted-foreground mb-8">
-                            May 04 - May 31, 2025
+                            June 15 - June 30, 2026
                         </p>
 
                         <ShareButtons
@@ -85,17 +85,17 @@ export default function ChallengeSprintPage() {
                         <div className="flex items-center gap-2 text-xs overflow-x-auto pb-2">
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-terminal text-terminal-text rounded font-medium">Challenge Sprint</span>
-                                <span className="text-muted-foreground">May 04-31</span>
+                                <span className="text-muted-foreground">June 15-30</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-secondary text-muted-foreground rounded">Review</span>
-                                <span className="text-muted-foreground">Jun 01</span>
+                                <span className="text-muted-foreground">July 01</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="px-2 py-1 bg-secondary text-muted-foreground rounded">Debugging Championship</span>
-                                <span className="text-muted-foreground">Jun 01-14</span>
+                                <span className="text-muted-foreground">July 01-07</span>
                             </div>
                             <span className="text-muted-foreground shrink-0">→</span>
                             <div className="flex items-center gap-2 shrink-0">
@@ -318,7 +318,7 @@ export default function ChallengeSprintPage() {
                                 <a href="/hackathon/debugging-championship" className="text-terminal-text hover:underline">
                                     Debugging Championship
                                 </a>{" "}
-                                happening June 1-14!
+                                happening July 1-7!
                             </p>
                         </div>
                     ) : (
