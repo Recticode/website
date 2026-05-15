@@ -2,7 +2,7 @@
 
 import {neon} from "@neondatabase/serverless";
 import {headers} from "next/headers"
-import {challengeLimiter} from "@/lib/ratelimit"
+import {challengeLimiter, waitlistLimiter} from "@/lib/ratelimit"
 import { unstable_cache } from "next/cache"
 import {Challenge, UserStats, PublicProfile, ChallengeStats} from "@/lib/types";
 
@@ -54,6 +54,40 @@ export async function submit_challenge(formData:
         await sql`INSERT INTO review_challenges (github_repo_url, challenge_name, difficulty, language, email, description) VALUES (${formData['repoUrl']}, ${formData['name']}, ${formData['difficulty']}, ${formData['language']}, ${formData['email']}, ${formData['description']})`;
         return {status: true, message: ""}
     } catch (err: any){
+        return {
+            success: false,
+            message: "Something went wrong. Please try again."
+        }
+    }
+}
+
+export async function submit_waitlist(email: string) {
+    const ip =
+        (await headers()).get("x-forwarded-for") ??
+        "unknown"
+
+    const { success } = await waitlistLimiter.limit(ip)
+
+    if (!success) {
+        return { success: false, message: "Rate limited. Try again in 5 minutes" }
+    }
+
+    if (!email.includes("@")){
+        return {success: false, message: "Invalid email address"};
+    }
+
+    const sql = neon(process.env.NEON_URL as string);
+    try {
+        await sql`INSERT INTO waitlist (email) VALUES (${email})`;
+        return {status: true, message: ""}
+    } catch (err: any){
+        if (err.code === '23505') {
+            return {
+                success: false,
+                message: "This email is already on the waitlist!"
+            };
+        }
+
         return {
             success: false,
             message: "Something went wrong. Please try again."

@@ -2,6 +2,7 @@ import Image from "next/image"
 import { Countdown } from "@/components/countdown"
 import { ShareButtons } from "@/components/share-buttons"
 import {ChallengeForm} from "@/components/challenge-form";
+import {WaitlistForm} from "@/components/waitlist-form";
 import Link from "next/link";
 import type {Metadata} from "next"
 
@@ -322,11 +323,7 @@ export default function ChallengeSprintPage() {
                             </p>
                         </div>
                     ) : (
-                        <div className="text-center py-10 bg-secondary/30 rounded-xl">
-                            <p className="text-muted-foreground">
-                                Form will be available when submissions open.
-                            </p>
-                        </div>
+                        <WaitlistForm />
                     )}
                 </div>
             </div>

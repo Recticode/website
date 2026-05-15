@@ -8,3 +8,9 @@ export const challengeLimiter = new Ratelimit({
     limiter: Ratelimit.slidingWindow(2, "5 m"),
     analytics: true,
 })
+
+export const waitlistLimiter = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(2, "5 m"),
+    analytics: true,
+})
