@@ -75,7 +75,7 @@ export default function Home() {
                                     Challenge Sprint + Debugging Championship
                                 </h2>
                                 <p className="text-sm text-white/60">
-                                    Create debugging challenges (June 15-30) or compete to solve them (July 1-7). Certificates and badges for all participants.
+                                    Create debugging challenges (July 16-31) or compete to solve them (August 1-7). Certificates and badges for all participants.
                                 </p>
                             </div>
                             <div className="flex items-center gap-2 text-terminal-text text-sm font-medium group-hover:translate-x-1 transition-transform">
