@@ -3,6 +3,7 @@ import { Countdown } from "@/components/countdown"
 import { ShareButtons } from "@/components/share-buttons"
 import Link from "next/link";
 import type {Metadata} from "next"
+import {HackathonSponsorSection} from "@/components/hackathon-sponsor-section";
 
 export const metadata: Metadata = {
     title: "Debugging Championship | Recticode",
@@ -258,44 +259,21 @@ export default function DebuggingChampionshipPage() {
                         </ul>
                     </div>
 
+                    <HackathonSponsorSection event="debugging-championship" />
+
                     {/* Sponsors */}
                     <div className="bg-secondary/50 rounded-xl p-6 mb-10">
-                        <h2 className="font-semibold text-foreground mb-4">Sponsors</h2>
+                        <h2 className="font-semibold text-foreground mb-4">Sponsor the hackathon</h2>
                         <p className="text-sm text-muted-foreground mb-6">
-                            Recticode is community funded. Sponsorship keeps the platform free and helps cover infrastructure costs.
+                            Recticode is looking for sponsor credits, licences, swag, and other useful prizes for hackathon participants and winners.
                         </p>
 
-                        <div className="space-y-3">
-                            <a
-                                href="https://buy.stripe.com/6oU14n0l7dvj050bEdbMQ02"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="block border border-border rounded-lg p-4 hover:bg-secondary hover:border-muted-foreground transition-all"
-                            >
-                                <h3 className="text-sm font-medium text-foreground">Supporter — £10</h3>
-                                <p className="text-sm text-muted-foreground mt-1">Logo listed on hackathon page</p>
-                            </a>
-
-                            <a
-                                href="https://buy.stripe.com/14AcN59VH62R8Bw9w5bMQ01"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="block border border-terminal-text/30 rounded-lg p-4 hover:bg-terminal-text/5 hover:border-terminal-text transition-all"
-                            >
-                                <h3 className="text-sm font-medium text-foreground">Silver — £50</h3>
-                                <p className="text-sm text-muted-foreground mt-1">Homepage logo for duration of hackathon</p>
-                            </a>
-
-                            <a
-                                href="https://buy.stripe.com/fZubJ1ebX3UJ2d8dMlbMQ00"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="block border border-amber-500/30 rounded-lg p-4 hover:bg-amber-500/5 hover:border-amber-500 transition-all"
-                            >
-                                <h3 className="text-sm font-medium text-foreground">Gold — £100</h3>
-                                <p className="text-sm text-muted-foreground mt-1">Featured sponsor section + demo day mention at Zerobase pitch</p>
-                            </a>
-                        </div>
+                        <a
+                            href="mailto:vulcan@recticode.com"
+                            className="text-sm text-terminal-text hover:underline"
+                        >
+                            Email vulcan@recticode.com to sponsor the hackathon.
+                        </a>
                     </div>
 
                     {/* Form */}
