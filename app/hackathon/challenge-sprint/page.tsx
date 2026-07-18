@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     }
 }
 
+
 export default function ChallengeSprintPage() {
     const startDate = new Date("2026-07-16T00:00:00")
     const endDate = new Date("2026-07-31T23:59:59")
